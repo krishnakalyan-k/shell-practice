@@ -2,11 +2,12 @@
 
 echo "Learning of variables and arguments"
 
-kalyan=mandapakala
-ashini=ullipalem
+number=20
 
-if ($kalyan -eq mandapakala); then 
-echo "kalyan located in mandapakala"
+if [ $number -gt 30 ]; then 
+echo ($number is greaterthan)
 
-else "kalyan related to some other village"
+else 
+echo ($number is lessthan)
+
 fi
