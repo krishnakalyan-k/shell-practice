@@ -5,5 +5,5 @@ echo "Learning of variables and arguments"
 number=20
 
 if [ $number -gt 30 ]; then 
-echo ( $number is greaterthan 30 )
+echo "$number is greaterthan 30"
 fi
