@@ -4,7 +4,7 @@ echo "Learning of variables and arguments"
 
 number=$@
 
-if [ $number -gt 30 ]; then 
+if [ "$number" -gt 30 ]; then 
 echo "$number is greaterthan 30"
 
 else 
