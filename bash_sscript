@@ -6,4 +6,7 @@ number=20
 
 if [ $number -gt 30 ]; then 
 echo "$number is greaterthan 30"
+
+else 
+echo "$number is lessthan 30"
 fi
