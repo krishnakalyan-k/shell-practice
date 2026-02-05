@@ -10,3 +10,15 @@ echo "$number is greaterthan 30"
 else 
 echo "$number is lessthan 30"
 fi
+
+echo "printing the script name $0"
+echo "printing the all argu passed to script$@"
+echo "printin the home dir of the user $HOME"
+echo "printing the all arguments $*"
+echo "printin the PID $$"
+sleep 10
+echo "printin the background pid $!"
+echo "who is runnin the script $USER"
+echo "number of variables passed the script $#"
+echo "status of the most recent exicuted command $?"
+echo "----------------------------"
