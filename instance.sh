@@ -21,8 +21,6 @@ if [ "$instance" != "frontend" ]; then
 privateIP=$( aws ec2 describe-instances --instance-ids "$INSTANCE_ID" --query 'Reservations[0].Instances[0].PrivateIpAddress' --output text)
 echo "$instance PRIVATE_IP:) $privateIP"
 
-sleep 120
-
 else
  publicIP=$( aws ec2 describe-instances --instance-ids "$INSTANCE_ID" --query 'Reservations[0].Instances[0].PublicIpAddress' --output text)
 echo "$instance PUBLIC_IP:) $publicIP"
