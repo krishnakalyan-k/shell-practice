@@ -15,7 +15,6 @@ if [ $? -eq 0 ]; then
 echo "Instance created:) instanceID=$INSTANCE_ID"
 else 
 echo "Instance creation failed"
-
 fi
 
 if [ "$instance" == "frontend" ]; then
@@ -26,10 +25,9 @@ echo "$instance PUBLIC_IP:) $publicIP"
 else
  privateIP=$( aws ec2 describe-instances --instance-ids "$INSTANCE_ID" --query 'Reservations[0].Instances[0].PrivateIpAddress' --output text)
 echo "$instance PRIVATE_IP:) $privateIP"
-
 fi 
 
-if [ "$instance" != "frontend" ]; then
+if [ "$instance" == "frontend" ]; then
 
 aws route53 change-resource-record-sets \
 --hosted-zone-id Z02527032EZS54C6SX6MK \
@@ -70,4 +68,3 @@ aws ec2 describe-instances \
     PrivateIP: PrivateIpAddress
   }' \
 --output table
-done
