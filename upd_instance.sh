@@ -8,7 +8,7 @@ for instance in $(cat $FILE)
 
 do
 
-INSTANCE_ID=$( aws ec2 run-instances --image-id $AMI_ID --count 1 --instance-type t3.micro --security-group-ids $SG_ID --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$FILE}]" --query 'Instances[0].InstanceId' --output text)
+INSTANCE_ID=$( aws ec2 run-instances --image-id $AMI_ID --count 1 --instance-type t3.micro --security-group-ids $SG_ID --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$instance}]" --query 'Instances[0].InstanceId' --output text)
 
 if [ $? -eq 0 ]; then
 echo "Instance created:) instanceID=$INSTANCE_ID"
@@ -29,3 +29,4 @@ echo "$instance PRIVATE_IP:) $privateIP"
 fi 
 
 done
+
