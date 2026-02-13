@@ -28,11 +28,6 @@ echo "$instance PRIVATE_IP:) $privateIP"
 
 fi 
 
-done
-
-
-
-
 if [ "$instance" != "frontend" ]; then
 
 aws route53 change-resource-record-sets \
