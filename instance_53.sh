@@ -9,6 +9,7 @@ for instance in $(cat $FILE)
 do
 
 INSTANCE_ID=$( aws ec2 run-instances --image-id $AMI_ID --count 1 --instance-type t3.micro --security-group-ids $SG_ID --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=$instance}]" --query 'Instances[0].InstanceId' --output text)
+done
 
 if [ $? -eq 0 ]; then
 echo "Instance created:) instanceID=$INSTANCE_ID"
@@ -69,3 +70,4 @@ aws ec2 describe-instances \
     PrivateIP: PrivateIpAddress
   }' \
 --output table
+done
