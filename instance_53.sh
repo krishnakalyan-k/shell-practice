@@ -68,5 +68,4 @@ aws ec2 describe-instances \
     PublicIP: PublicIpAddress,
     PrivateIP: PrivateIpAddress
   }' \
-
 --output table
