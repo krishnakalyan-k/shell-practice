@@ -40,7 +40,7 @@ aws route53 change-resource-record-sets \
       \"Name\": \"$instance.krishnakalyan.online\",
       \"Type\": \"A\",
       \"TTL\": 60,
-      \"ResourceRecords\": [{\"Value\": \"$privateIP\"}]
+      \"ResourceRecords\": [{\"Value\": \"$publicIP\"}]
     }
   }]
 }"
@@ -56,7 +56,7 @@ aws route53 change-resource-record-sets \
       \"Name\": \"$instance.krishnakalyan.online\",
       \"Type\": \"A\",
       \"TTL\": 60,
-      \"ResourceRecords\": [{\"Value\": \"$publicIP\"}]
+      \"ResourceRecords\": [{\"Value\": \"$privateIP\"}]
     }
   }]
 }"
