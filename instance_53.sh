@@ -58,7 +58,7 @@ else
     }
   }]
 }'
-if 
+fi
 
 aws ec2 describe-instances \
   --filters "Name=instance-state-name,Values=running" \
