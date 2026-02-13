@@ -67,7 +67,12 @@ aws ec2 describe-instances \
     PublicIP: PublicIpAddress,
     PrivateIP: PrivateIpAddress
   }' \
+--output text | while read NAME PUB PRIV
+do
+    DNS=$(aws route53 list-resource-record-sets \
+        --hosted-zone-id $ZONE_ID \
+        --query "ResourceRecordSets[?ResourceRecords[?Value=='$PUB']].Name" \
+        --output text)
 
---output table
-
-
+    echo "$NAME | $PRIV | $PUB | $DNS"
+done
