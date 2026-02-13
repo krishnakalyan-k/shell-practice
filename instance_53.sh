@@ -32,32 +32,33 @@ if [ "$instance" != "frontend" ]; then
 
 aws route53 change-resource-record-sets \
 --hosted-zone-id Z02527032EZS54C6SX6MK \
---change-batch '{
-  "Changes": [{
-    "Action": "CREATE",
-    "ResourceRecordSet": {
-      "Name": "$instance.krishnakalyan.online",
-      "Type": "A",
-      "TTL": 1,
-      "ResourceRecords": [{"Value": "privateIP"}]
+--change-batch "{
+  \"Changes\": [{
+    \"Action\": \"CREATE\",
+    \"ResourceRecordSet\": {
+      \"Name\": \"$instance.krishnakalyan.online\",
+      \"Type\": \"A\",
+      \"TTL\": 60,
+      \"ResourceRecords\": [{\"Value\": \"$privateIP\"}]
     }
   }]
-}'
+}"
 
 else
- aws route53 change-resource-record-sets \
+
+aws route53 change-resource-record-sets \
 --hosted-zone-id Z02527032EZS54C6SX6MK \
---change-batch '{
-  "Changes": [{
-    "Action": "CREATE",
-    "ResourceRecordSet": {
-      "Name": "$instance.krishnakalyan.online",
-      "Type": "A",
-      "TTL": 1,
-      "ResourceRecords": [{"Value": "publicIP"}]
+--change-batch "{
+  \"Changes\": [{
+    \"Action\": \"CREATE\",
+    \"ResourceRecordSet\": {
+      \"Name\": \"$instance.krishnakalyan.online\",
+      \"Type\": \"A\",
+      \"TTL\": 60,
+      \"ResourceRecords\": [{\"Value\": \"$publicIP\"}]
     }
   }]
-}'
+}"
 fi
 
 aws ec2 describe-instances \
