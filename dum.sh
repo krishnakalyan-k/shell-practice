@@ -25,7 +25,7 @@ else
  privateIP=$( aws ec2 describe-instances --instance-ids "$INSTANCE_ID" --query 'Reservations[0].Instances[0].PrivateIpAddress' --output text)
 echo "$instance PRIVATE_IP:) $privateIP"
 fi 
-done
+
 
 if [ "$instance" == "frontend" ]; then
 
@@ -59,6 +59,7 @@ aws route53 change-resource-record-sets \
   }]
 }"
 fi
+done
 
 aws ec2 describe-instances \
   --filters "Name=instance-state-name,Values=running" \
