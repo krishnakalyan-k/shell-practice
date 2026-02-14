@@ -12,7 +12,7 @@ INSTANCE_ID=$( aws ec2 run-instances --image-id $AMI_ID --count 1 --instance-typ
 
 if [ $? -eq 0 ]; then
 echo "Instance created:) instanceID=$INSTANCE_ID"
-else 
+else
 echo "Instance creation failed"
 fi
 
@@ -24,7 +24,7 @@ echo "$instance PUBLIC_IP:) $publicIP"
 else
  privateIP=$( aws ec2 describe-instances --instance-ids "$INSTANCE_ID" --query 'Reservations[0].Instances[0].PrivateIpAddress' --output text)
 echo "$instance PRIVATE_IP:) $privateIP"
-fi 
+fi
 
 
 if [ "$instance" == "frontend" ]; then
@@ -61,11 +61,34 @@ aws route53 change-resource-record-sets \
 fi
 done
 
-aws ec2 describe-instances \
-  --filters "Name=instance-state-name,Values=running" \
-  --query 'Reservations[].Instances[].{
-    Name: Tags[?Key==`Name`].Value | [0],
-    PublicIP: PublicIpAddress,
-    PrivateIP: PrivateIpAddress
-  }' \
---output table
+sleep 30
+
+ZONE_ID="Z02527032EZS54C6SX6MK"
+DOMAIN="krishnakalyan.online"
+
+printf "%-12s %-15s %-15s %-30s %-15s\n" \
+"Name" "PrivateIP" "PublicIP" "DNS" "DNS_IP"
+
+for instance in $(cat $FILE)
+do
+    read NAME PRIV PUB <<< $(aws ec2 describe-instances \
+        --filters Name=tag:Name,Values=$instance \
+                  Name=instance-state-name,Values=running \
+        --query 'Reservations[].Instances[].[
+            Tags[?Key==`Name`].Value | [0],
+            PrivateIpAddress,
+            PublicIpAddress
+        ]' \
+        --output text)
+
+    DNS="$instance.$DOMAIN"
+
+    DNS_IP=$(aws route53 list-resource-record-sets \
+        --hosted-zone-id $ZONE_ID \
+        --query "ResourceRecordSets[?Name=='$DNS.'].ResourceRecords[0].Value" \
+        --output text)
+
+    printf "%-12s %-15s %-15s %-30s %-15s\n" \
+    "$NAME" "$PRIV" "$PUB" "$DNS" "$DNS_IP"
+
+done
