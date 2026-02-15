@@ -11,13 +11,13 @@ mongoprivate_ip=$(awk '$1=="mongodb" {print $2}' "$INSTANCE_INFO")
 mongopublic_ip=$(awk '$1=="mongodb" {print $3}' "$INSTANCE_INFO")
 mongodns_name=$(awk '$1=="mongodb" {print $4}' "$INSTANCE_INFO")
 
-ssh $mongopublic_ip <<'EOF'
+ssh root@$mongopublic_ip <<'EOF'
 VALIDATE(){
     if [ $1 -ne 0 ]; then
-        echo -e "$2 ... $R FAILURE $N" 
+        echo -e " FAILURE " 
         exit 1
     else
-        echo -e "$2 ... $G SUCCESS $N" 
+        echo -e " SUCCESS " 
     fi
 }
 
@@ -42,7 +42,6 @@ VALIDATE $? "MongoDB services started"
 EOF
 
 else 
-echo "instance not found in the file"
+continue
 fi
-
 done
