@@ -1,15 +1,11 @@
 #!/bin/bash
 
 INSTANCE_INFO="instances_53recordsinfo.txt"
-FILE="instance_name.txt"
-
 
 FILE="instance_name.txt"
 
 for instance in $(cat $FILE)
-
 do
-
 if [ "$instance" == "mongodb" ]; then 
 mongoprivate_ip=$(awk '$1=="mongodb" {print $2}' "$INSTANCE_INFO")
 mongopublic_ip=$(awk '$1=="mongodb" {print $3}' "$INSTANCE_INFO")
@@ -29,7 +25,7 @@ VALIDATE $? "Connected to MongoDB server"
 
 git clone https://github.com/krishnakalyan-k/shell-practice.git
 VALIDATE $? "git clone"
-cp /root/shell-practice/mongoDB_verinfo.txt /etc/yum.repos.d/mongo.repo
+cp shell-practice/mongoDB_verinfo.txt /etc/yum.repos.d/mongo.repo
 VALIDATE $? "copying of mongodb verinfo file"
 
 dnf install mongodb-org -y 
