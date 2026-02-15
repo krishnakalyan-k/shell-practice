@@ -24,6 +24,12 @@ VALIDATE(){
     fi
 }
 
+FILE="instance_name.txt"
+
+for instance in $(cat $FILE)
+
+do
+
 if [ "$instance" == "mongodb" ]; then 
 mongoprivate_ip=$(awk '$1=="mongodb" {print $2}' "$INSTANCE_INFO")
 mongopublic_ip=$(awk '$1=="mongodb" {print $3}' "$INSTANCE_INFO")
@@ -37,7 +43,7 @@ $pwd
 
 git clone https://github.com/krishnakalyan-k/shell-practice.git
 
-cp shell-practice/mongoDB_verinfo.txt /etc/yum.repos.d/mongo.repo
+cp /root/shell-practice/mongoDB_verinfo.txt /etc/yum.repos.d/mongo.repo
 VALIDATE $? "copying of mongodb verinfo file"
 
 dnf install mongodb-org -y 
@@ -56,3 +62,5 @@ EOF
 else 
 echo "mongodb details not found in the file"
 fi
+
+done
