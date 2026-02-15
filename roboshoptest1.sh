@@ -15,8 +15,7 @@ mongoprivate_ip=$(awk '$1=="mongodb" {print $2}' "$INSTANCE_INFO")
 mongopublic_ip=$(awk '$1=="mongodb" {print $3}' "$INSTANCE_INFO")
 mongodns_name=$(awk '$1=="mongodb" {print $4}' "$INSTANCE_INFO")
 
-ssh $mongopublic_ip <<EOF
-
+ssh $mongopublic_ip <<'EOF'
 VALIDATE(){
     if [ $1 -ne 0 ]; then
         echo -e "$2 ... $R FAILURE $N" 
@@ -26,7 +25,7 @@ VALIDATE(){
     fi
 }
 
-VALIDATE $? "Lonin to mongodb"
+VALIDATE $? "Connected to MongoDB server"
 
 git clone https://github.com/krishnakalyan-k/shell-practice.git
 VALIDATE $? "git clone"
