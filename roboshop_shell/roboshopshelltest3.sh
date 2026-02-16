@@ -140,6 +140,9 @@ VALIDATE(){
 
 VALIDATE $? "Connected to $instance server"
 
+git clone https://github.com/krishnakalyan-k/shell-practice.git
+VALIDATE $? "git clone"
+
 cp /shell-practice/rabbitmq.txt /etc/yum.repos.d/rabbitmq.repo
 VALIDATE $? "Copying of repo"
 
