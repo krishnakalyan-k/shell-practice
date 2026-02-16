@@ -21,6 +21,9 @@ VALIDATE(){
     fi
 }
 
+rm -rf /etc/yum.repos.d/mongo.repo
+rm -rf shell-practice
+
 VALIDATE $? "Connected to MongoDB server"
 
 git clone https://github.com/krishnakalyan-k/shell-practice.git
