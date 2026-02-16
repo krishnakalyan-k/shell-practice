@@ -47,8 +47,6 @@ VALIDATE $? "MongoDB services started"
 VALIDATE $? "************ SUCCESSFULLY CONFUGURED MONGODB*****************************"
 EOF
 
-else 
-continue
 fi
 
 if [ "$instance" == "mysql" ]; then 
@@ -83,8 +81,6 @@ VALIDATE $? "ROOT password setting"
 VALIDATE $? "************ SUCCESSFULLY CONFUGURED "$instance"*****************************"
 EOF
 
-else 
-continue
 fi
 
 if [ "$instance" == "redis" ]; then 
@@ -125,8 +121,6 @@ VALIDATE $? "start redis"
 VALIDATE $? "************ SUCCESSFULLY CONFUGURED "$instance"*****************************"
 EOF
 
-else 
-continue
 fi
 
 if [ "$instance" == "rabbitmq" ]; then 
@@ -167,8 +161,6 @@ VALIDATE $? "set_permissions"
 VALIDATE $? "************ SUCCESSFULLY CONFUGURED "$instance"*****************************"
 EOF
 
-else 
-continue
 fi
 
 done
