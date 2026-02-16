@@ -51,3 +51,124 @@ else
 continue
 fi
 
+if [ "$instance" == "mysql" ]; then 
+${instance}private_ip=$(awk '$1=="$instance" {print $2}' "$INSTANCE_INFO")
+${instance}public_ip=$(awk '$1=="$instance" {print $3}' "$INSTANCE_INFO")
+${instance}dns_name=$(awk '$1=="$instance" {print $4}' "$INSTANCE_INFO")
+
+ssh  root@${instance}public_ip << 'EOF'
+VALIDATE(){
+    if [ $1 -ne 0 ]; then
+        echo -e "$2 ... $R FAILURE $N" | tee -a $LOGS_FILE
+        exit 1
+    else
+        echo -e "$2 ... $G SUCCESS $N" | tee -a $LOGS_FILE
+    fi
+}
+
+VALIDATE $? "Connected to $instance server"
+
+dnf install mysql-server -y
+VALIDATE $? "Installation of mysqlDB"
+
+systemctl enable mysqld
+VALIDATE $? "enable mysqld"
+
+systemctl start mysqld
+VALIDATE $? "start mysqld"
+
+mysql_secure_installation --set-root-pass RoboShop@1
+VALIDATE $? "ROOT password setting"
+
+VALIDATE $? "************ SUCCESSFULLY CONFUGURED "$instance"*****************************"
+EOF
+
+else 
+continue
+fi
+
+if [ "$instance" == "redis" ]; then 
+${instance}private_ip=$(awk '$1=="$instance" {print $2}' "$INSTANCE_INFO")
+${instance}public_ip=$(awk '$1=="$instance" {print $3}' "$INSTANCE_INFO")
+${instance}dns_name=$(awk '$1=="$instance" {print $4}' "$INSTANCE_INFO")
+
+ssh  root@${instance}public_ip << 'EOF'
+VALIDATE(){
+    if [ $1 -ne 0 ]; then
+        echo -e "$2 ... $R FAILURE $N" | tee -a $LOGS_FILE
+        exit 1
+    else
+        echo -e "$2 ... $G SUCCESS $N" | tee -a $LOGS_FILE
+    fi
+}
+
+VALIDATE $? "Connected to $instance server"
+
+dnf module disable redis -y
+VALIDATE $? "module disable"
+
+dnf module enable redis:7 -y
+VALIDATE $? "module enable"
+
+dnf install redis -y 
+VALIDATE $? "install redis"
+
+sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis/redis.conf
+VALIDATE $? "changed the cfg file"
+
+systemctl enable redis 
+VALIDATE $? "enable redis"
+
+systemctl start redis 
+VALIDATE $? "start redis"
+
+VALIDATE $? "************ SUCCESSFULLY CONFUGURED "$instance"*****************************"
+EOF
+
+else 
+continue
+fi
+
+if [ "$instance" == "rabbitmq" ]; then 
+${instance}private_ip=$(awk '$1=="$instance" {print $2}' "$INSTANCE_INFO")
+${instance}public_ip=$(awk '$1=="$instance" {print $3}' "$INSTANCE_INFO")
+${instance}dns_name=$(awk '$1=="$instance" {print $4}' "$INSTANCE_INFO")
+
+ssh  root@${instance}public_ip << 'EOF'
+VALIDATE(){
+    if [ $1 -ne 0 ]; then
+        echo -e "$2 ... $R FAILURE $N" | tee -a $LOGS_FILE
+        exit 1
+    else
+        echo -e "$2 ... $G SUCCESS $N" | tee -a $LOGS_FILE
+    fi
+}
+
+VALIDATE $? "Connected to $instance server"
+
+cp shell-practice/rabbitmq.txt /etc/yum.repos.d/rabbitmq.repo
+VALIDATE $? "Copying of repo"
+
+dnf install rabbitmq-server -y
+VALIDATE $? "install rabbitmq"
+
+systemctl enable rabbitmq-server
+VALIDATE $? "enable rabbitmq"
+
+systemctl start rabbitmq-server
+VALIDATE $? "start rabbitmq"
+
+rabbitmqctl add_user roboshop roboshop123
+VALIDATE $? "add_user roboshop"
+
+rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
+VALIDATE $? "set_permissions"
+
+VALIDATE $? "************ SUCCESSFULLY CONFUGURED "$instance"*****************************"
+EOF
+
+else 
+continue
+fi
+
+done
