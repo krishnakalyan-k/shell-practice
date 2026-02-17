@@ -16,7 +16,7 @@ public_ip=$(awk -v inst="$instance" '$1==inst {print $3}' "$INSTANCE_INFO")
 dns_name=$(awk -v inst="$instance" '$1==inst {print $4}' "$INSTANCE_INFO")
 
 echo "$public_ip"
-ssh -T root@$public_ip <<'EOF'
+ssh -T root@$public_ip <<EOF
 VALIDATE(){
     if [ $1 -ne 0 ]; then
         echo -e "$2 ... $R FAILURE $N" 
