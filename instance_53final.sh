@@ -65,7 +65,7 @@ sleep 30
 
 ZONE_ID="Z02527032EZS54C6SX6MK"
 DOMAIN="krishnakalyan.online"
-
+REPORT="instances_53recordsinfo.txt"
 printf "%-12s %-15s %-15s %-30s %-15s\n" \
 "Name" "PrivateIP" "PublicIP" "DNS" "DNS_IP"
 
@@ -89,5 +89,5 @@ do
         --output text)
 
     printf "%-12s %-15s %-15s %-30s %-15s\n" \
-    "$NAME" "$PRIV" "$PUB" "$DNS" "$DNS_IP" 
+    "$NAME" "$PRIV" "$PUB" "$DNS" "$DNS_IP" >> "$REPORT"
     done
