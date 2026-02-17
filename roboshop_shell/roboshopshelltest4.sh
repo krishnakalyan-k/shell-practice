@@ -7,17 +7,20 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
-eval "${instance}_privateIP=$(awk -v inst="$instance" '$1==inst {print $2}' "$INSTANCE_INFO")"
-eval "${instance}_publicIP=$(awk -v inst="$instance" '$1==inst {print $3}' "$INSTANCE_INFO")"
-eval "${instance}_dnsNAME=$(awk -v inst="$instance" '$1==inst {print $4}' "$INSTANCE_INFO")"
 
 USER_SERVICE="/shell-practice/roboshop_shell/user.service"
 
 for instance in $(cat $FILE)
 do
-if [ "$instance" == "mongodb" ]; then 
 
-ssh  root@${instance}_publicIP << 'EOF'
+eval "${instance}_privateIP=$(awk -v inst="$instance" '$1==inst {print $2}' "$INSTANCE_INFO")"
+eval "${instance}_publicIP=$(awk -v inst="$instance" '$1==inst {print $3}' "$INSTANCE_INFO")"
+eval "${instance}_dnsNAME=$(awk -v inst="$instance" '$1==inst {print $4}' "$INSTANCE_INFO")"
+
+if [ "$instance" == "mongodb" ]; then 
+public_ip=$(awk -v inst="$instance" '$1==inst {print $3}' "$INSTANCE_INFO")
+
+ssh  root@$public_ip << 'EOF'
 VALIDATE(){
     if [ $1 -ne 0 ]; then
         echo -e "$2 ... $R FAILURE $N" | tee -a $LOGS_FILE
@@ -52,8 +55,8 @@ EOF
 fi
 
 if [ "$instance" == "mysql" ]; then 
-
-ssh  root@${instance}_publicIP << 'EOF'
+public_ip=$(awk -v inst="$instance" '$1==inst {print $3}' "$INSTANCE_INFO")
+ssh  root@$public_ip << 'EOF'
 VALIDATE(){
     if [ $1 -ne 0 ]; then
         echo -e "$2 ... $R FAILURE $N" | tee -a $LOGS_FILE
@@ -83,6 +86,7 @@ EOF
 fi
 
 if [ "$instance" == "user" ]; then 
+public_ip=$(awk -v inst="$instance" '$1==inst {print $3}' "$INSTANCE_INFO")
 ssh  root@$public_ip << 'EOF'
 VALIDATE(){
     if [ $1 -ne 0 ]; then
