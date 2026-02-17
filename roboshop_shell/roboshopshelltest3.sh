@@ -15,6 +15,7 @@ private_ip=$(awk -v inst="$instance" '$1==inst {print $2}' "$INSTANCE_INFO")
 public_ip=$(awk -v inst="$instance" '$1==inst {print $3}' "$INSTANCE_INFO")
 dns_name=$(awk -v inst="$instance" '$1==inst {print $4}' "$INSTANCE_INFO")
 
+echo "$public_ip"
 ssh -T root@$public_ip <<'EOF'
 VALIDATE(){
     if [ $1 -ne 0 ]; then
