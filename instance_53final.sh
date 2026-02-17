@@ -89,5 +89,5 @@ do
         --output text)
 
     printf "%-12s %-15s %-15s %-30s %-15s\n" \
-    "$NAME" "$PRIV" "$PUB" "$DNS" "$DNS_IP" >> "$REPORT"
+    "$NAME" "$PRIV" "$PUB" "$DNS" "$DNS_IP" > "$REPORT"
     done
