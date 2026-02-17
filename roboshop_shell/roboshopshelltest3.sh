@@ -8,7 +8,7 @@ Y="\e[33m"
 N="\e[0m"
 USER_SERVICE="/shell-practice/roboshop_shell/user.service"
 
-for instance in $(cat $FILE)
+while read instance
 do
 if [ "$instance" == "mongodb" ]; then 
 private_ip=$(awk -v inst="$instance" '$1==inst {print $2}' "$INSTANCE_INFO")
@@ -17,7 +17,7 @@ dns_name=$(awk -v inst="$instance" '$1==inst {print $4}' "$INSTANCE_INFO")
 
 echo "Instance: $instance"
 echo "publicIP: $public_ip"
-ssh -tt root@$public_ip <<'EOF'
+ssh root@$public_ip <<'EOF'
 VALIDATE(){
     if [ $1 -ne 0 ]; then
         echo -e "$2 ... $R FAILURE $N" 
@@ -235,4 +235,4 @@ EOF
 
  fi
 
-done
+done < "$FILE"
