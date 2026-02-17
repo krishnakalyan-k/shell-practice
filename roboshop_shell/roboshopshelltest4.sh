@@ -20,7 +20,7 @@ do
 if [ "$instance" == "mongodb" ]; then 
 public_ip=$(awk -v inst="$instance" '$1==inst {print $3}' "$INSTANCE_INFO")
 
-ssh  root@$public_ip << 'EOF'
+ssh  root@$public_ip <<'EOF'
 VALIDATE(){
     if [ $1 -ne 0 ]; then
         echo -e "$2 ... $R FAILURE $N" | tee -a $LOGS_FILE
@@ -56,7 +56,7 @@ fi
 
 if [ "$instance" == "mysql" ]; then 
 public_ip=$(awk -v inst="$instance" '$1==inst {print $3}' "$INSTANCE_INFO")
-ssh  root@$public_ip << 'EOF'
+ssh  root@$public_ip <<'EOF'
 VALIDATE(){
     if [ $1 -ne 0 ]; then
         echo -e "$2 ... $R FAILURE $N" | tee -a $LOGS_FILE
