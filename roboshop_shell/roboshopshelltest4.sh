@@ -127,8 +127,8 @@ VALIDATE $? "Installed dependinces $instance "
 cp $USER_SERVICE /etc/systemd/system/
 VALIDATE $? "copyed user.service file for $instance "
 
-sed -i /s/<REDIS-IP-ADDRESS>/redis.krishnakalyan.online/g /etc/systemd/system/user.service
-sed -i /s/<MONGODB-SERVER-IP-ADDRESS>/mongodb.krishnakalyan.online/g /etc/systemd/system/user.service
+sed -i '/s/<REDIS-IP-ADDRESS>/redis.krishnakalyan.online/g' /etc/systemd/system/user.service
+sed -i '/s/<MONGODB-SERVER-IP-ADDRESS>/mongodb.krishnakalyan.online/g' /etc/systemd/system/user.service
 VALIDATE $? "updated user.service file with DNS records for $instance "
 
 systemctl daemon-reload
