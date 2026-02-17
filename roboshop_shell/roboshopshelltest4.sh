@@ -13,9 +13,9 @@ USER_SERVICE="/shell-practice/roboshop_shell/user.service"
 for instance in $(cat $FILE)
 do
 
-eval "${instance}_privateIP=$(awk -v inst="$instance" '$1==inst {print $2}' "$INSTANCE_INFO")"
-eval "${instance}_publicIP=$(awk -v inst="$instance" '$1==inst {print $3}' "$INSTANCE_INFO")"
-eval "${instance}_dnsNAME=$(awk -v inst="$instance" '$1==inst {print $4}' "$INSTANCE_INFO")"
+ "${instance}_privateIP=$(awk -v inst="$instance" '$1==inst {print $2}' "$INSTANCE_INFO")"
+ "${instance}_publicIP=$(awk -v inst="$instance" '$1==inst {print $3}' "$INSTANCE_INFO")"
+ "${instance}_dnsNAME=$(awk -v inst="$instance" '$1==inst {print $4}' "$INSTANCE_INFO")"
 
 if [ "$instance" == "mongodb" ]; then 
 public_ip=$(awk -v inst="$instance" '$1==inst {print $3}' "$INSTANCE_INFO")
