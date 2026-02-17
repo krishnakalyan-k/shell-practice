@@ -9,7 +9,7 @@ mongoprivate_ip=$(awk '$1=="mongodb" {print $2}' "$INSTANCE_INFO")
 mongopublic_ip=$(awk '$1=="mongodb" {print $3}' "$INSTANCE_INFO")
 mongodns_name=$(awk '$1=="mongodb" {print $4}' "$INSTANCE_INFO")
 
-ssh -T root@$mongopublic_ip << 'EOF'
+ssh -T root@$mongopublic_ip <<'EOF'
 VALIDATE(){
     if [ $1 -ne 0 ]; then
         echo -e "$2 FAILURE " 
