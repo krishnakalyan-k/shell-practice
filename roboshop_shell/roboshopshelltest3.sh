@@ -15,13 +15,13 @@ private_ip=$(awk -v inst="$instance" '$1==inst {print $2}' "$INSTANCE_INFO")
 public_ip=$(awk -v inst="$instance" '$1==inst {print $3}' "$INSTANCE_INFO")
 dns_name=$(awk -v inst="$instance" '$1==inst {print $4}' "$INSTANCE_INFO")
 
-ssh  root@"$public_ip" << EOF
+ssh  root@$public_ip << EOF
 VALIDATE(){
     if [ $1 -ne 0 ]; then
-        echo -e "$2 ... $R FAILURE $N" | tee -a $LOGS_FILE
+        echo -e "$2 ... $R FAILURE $N" 
         exit 1
     else
-        echo -e "$2 ... $G SUCCESS $N" | tee -a $LOGS_FILE
+        echo -e "$2 ... $G SUCCESS $N" 
     fi
 }
 
@@ -54,13 +54,13 @@ private_ip=$(awk -v inst="$instance" '$1==inst {print $2}' "$INSTANCE_INFO")
 public_ip=$(awk -v inst="$instance" '$1==inst {print $3}' "$INSTANCE_INFO")
 dns_name=$(awk -v inst="$instance" '$1==inst {print $4}' "$INSTANCE_INFO")
 
-ssh  root@"$public_ip" << EOF
+ssh  root@$public_ip << EOF
 VALIDATE(){
     if [ $1 -ne 0 ]; then
-        echo -e "$2 ... $R FAILURE $N" | tee -a $LOGS_FILE
+        echo -e "$2 ... $R FAILURE $N" 
         exit 1
     else
-        echo -e "$2 ... $G SUCCESS $N" | tee -a $LOGS_FILE
+        echo -e "$2 ... $G SUCCESS $N" 
     fi
 }
 
@@ -92,10 +92,10 @@ ssh  root@$public_ip << EOF
 echo "Connected to MongoDB server"
 VALIDATE(){
     if [ $1 -ne 0 ]; then
-        echo -e "$2 ... $R FAILURE $N" | tee -a $LOGS_FILE
+        echo -e "$2 ... $R FAILURE $N" 
         exit 1
     else
-        echo -e "$2 ... $G SUCCESS $N" | tee -a $LOGS_FILE
+        echo -e "$2 ... $G SUCCESS $N" 
     fi
 }
 
@@ -129,13 +129,13 @@ private_ip=$(awk -v inst="$instance" '$1==inst {print $2}' "$INSTANCE_INFO")
 public_ip=$(awk -v inst="$instance" '$1==inst {print $3}' "$INSTANCE_INFO")
 dns_name=$(awk -v inst="$instance" '$1==inst {print $4}' "$INSTANCE_INFO")
 
-ssh  root@"$public_ip" << EOF
+ssh  root@$public_ip << EOF
 VALIDATE(){
     if [ $1 -ne 0 ]; then
-        echo -e "$2 ... $R FAILURE $N" | tee -a $LOGS_FILE
+        echo -e "$2 ... $R FAILURE $N" 
         exit 1
     else
-        echo -e "$2 ... $G SUCCESS $N" | tee -a $LOGS_FILE
+        echo -e "$2 ... $G SUCCESS $N" 
     fi
 }
 
@@ -172,7 +172,7 @@ private_ip=$(awk -v inst="$instance" '$1==inst {print $2}' "$INSTANCE_INFO")
 public_ip=$(awk -v inst="$instance" '$1==inst {print $3}' "$INSTANCE_INFO")
 dns_name=$(awk -v inst="$instance" '$1==inst {print $4}' "$INSTANCE_INFO")
 
-ssh  root@"$public_ip" << 'EOF'
+ssh  root@$public_ip << 'EOF'
 VALIDATE(){
     if [ $1 -ne 0 ]; then
         echo -e "$2 ... $R FAILURE $N" | tee -a $LOGS_FILE
