@@ -9,38 +9,40 @@ mongoprivate_ip=$(awk '$1=="mongodb" {print $2}' "$INSTANCE_INFO")
 mongopublic_ip=$(awk '$1=="mongodb" {print $3}' "$INSTANCE_INFO")
 mongodns_name=$(awk '$1=="mongodb" {print $4}' "$INSTANCE_INFO")
 
-ssh -T root@$mongopublic_ip <<EOF
+ssh -T root@"$mongopublic_ip" <<EOF
 VALIDATE(){
-    if [ "$1" -ne 0 ]; then
-        echo -e "$2 ... $R FAILURE $N" | tee -a $LOGS_FILE
+    if [ "\$1" -ne 0 ]; then
+        echo -e "\$2 ... FAILURE" | tee -a \$LOGS_FILE
         exit 1
     else
-        echo -e "$2 ... $G SUCCESS $N" | tee -a $LOGS_FILE
+        echo -e "\$2 ... SUCCESS" | tee -a \$LOGS_FILE
     fi
 }
 
-VALIDATE $? "Connected to $instance server"
+echo "Connected to mongodb server"
+VALIDATE \$? "Connected to $instance server"
 
 rm -rf /root/shell-practice
 rm -rf /etc/yum.repos.d/mongo.repo
 dnf remove mongodb-org -y
 
 git clone https://github.com/krishnakalyan-k/shell-practice.git
-VALIDATE $? "git clone"
+VALIDATE \$? "git clone"
+
 cp shell-practice/mongoDB_verinfo.txt /etc/yum.repos.d/mongo.repo
-VALIDATE $? "copying of mongodb verinfo file"
+VALIDATE \$? "copy mongodb repo"
 
 dnf install mongodb-org -y 
-VALIDATE $? "installation of $instance "
+VALIDATE \$? "mongodb installation"
 
 systemctl enable mongod 
-VALIDATE $? "enable $instance "
+VALIDATE \$? "enable mongod"
 
 sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
-VALIDATE $? "Edited $instance cfg file"
+VALIDATE \$? "config update"
 
 systemctl start mongod
-VALIDATE $? "$instance services started"
+VALIDATE \$? "mongod started"
 EOF
 
 fi
