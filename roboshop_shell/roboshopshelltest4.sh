@@ -30,26 +30,26 @@ VALIDATE(){
     fi
 }
 
-VALIDATE $? "Connected to "$instance" server"
+VALIDATE $? "Connected to $instance server"
 
 git clone https://github.com/krishnakalyan-k/shell-practice.git
 VALIDATE $? "git clone"
 cp shell-practice/mongoDB_verinfo.txt /etc/yum.repos.d/mongo.repo
-VALIDATE $? "copying of "$instance" verinfo file"
+VALIDATE $? "copying of $instance verinfo file"
 
 dnf install mongodb-org -y 
-VALIDATE $? "installation of "$instance""
+VALIDATE $? "installation of $instance"
 
 systemctl enable mongod 
-VALIDATE $? "enable "$instance""
+VALIDATE $? "enable $instance"
 
 sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
-VALIDATE $? "Edited "$instance" cfg file"
+VALIDATE $? "Edited $instance cfg file"
 
 systemctl start mongod
-VALIDATE $? ""$instance" services started"
+VALIDATE $? "$instance services started"
 
-VALIDATE $? "************ SUCCESSFULLY CONFUGURED "$instance"*****************************"
+VALIDATE $? "************ SUCCESSFULLY CONFUGURED $instance*****************************"
 EOF
 
 fi
@@ -121,8 +121,10 @@ VALIDATE $? "Copying of user.file for "$instance" "
 unzip /app/user.zip
 VALIDATE $? "Unzipped code file for "$instance" "
 
-/app/npm install
+cd /app
+npm install
 VALIDATE $? "Installed dependinces "$instance" "
+cd /
 
 cp $USER_SERVICE /etc/systemd/system/
 VALIDATE $? "copyed user.service file for "$instance" "
