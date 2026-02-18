@@ -53,7 +53,7 @@ aws route53 change-resource-record-sets \
     \"ResourceRecordSet\": {
       \"Name\": \"$instance.krishnakalyan.online\",
       \"Type\": \"A\",
-      \"TTL\": 60,
+      \"TTL\": 1,
       \"ResourceRecords\": [{\"Value\": \"$privateIP\"}]
     }
   }]
@@ -66,6 +66,9 @@ sleep 30
 ZONE_ID="Z02527032EZS54C6SX6MK"
 DOMAIN="krishnakalyan.online"
 REPORT="instances_53recordsinfo.txt"
+
+> "$REPORT"
+
 printf "%-12s %-15s %-15s %-30s %-15s\n" \
 "Name" "PrivateIP" "PublicIP" "DNS" "DNS_IP"
 
@@ -89,5 +92,5 @@ do
         --output text)
 
     printf "%-12s %-15s %-15s %-30s %-15s\n" \
-    "$NAME" "$PRIV" "$PUB" "$DNS" "$DNS_IP" > "$REPORT"
+    "$NAME" "$PRIV" "$PUB" "$DNS" "$DNS_IP" >> "$REPORT"
     done
