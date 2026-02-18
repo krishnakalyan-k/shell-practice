@@ -30,26 +30,26 @@ VALIDATE(){
     fi
 }
 
-VALIDATE $? "Connected to MongoDB server"
+VALIDATE $? "Connected to "$instance" server"
 
 git clone https://github.com/krishnakalyan-k/shell-practice.git
 VALIDATE $? "git clone"
 cp shell-practice/mongoDB_verinfo.txt /etc/yum.repos.d/mongo.repo
-VALIDATE $? "copying of mongodb verinfo file"
+VALIDATE $? "copying of "$instance" verinfo file"
 
 dnf install mongodb-org -y 
-VALIDATE $? "installation of mongodb"
+VALIDATE $? "installation of "$instance""
 
 systemctl enable mongod 
-VALIDATE $? "enable mongodb"
+VALIDATE $? "enable "$instance""
 
 sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
-VALIDATE $? "Edited momgodb cfg file"
+VALIDATE $? "Edited "$instance" cfg file"
 
 systemctl start mongod
-VALIDATE $? "MongoDB services started"
+VALIDATE $? ""$instance" services started"
 
-VALIDATE $? "************ SUCCESSFULLY CONFUGURED MONGODB*****************************"
+VALIDATE $? "************ SUCCESSFULLY CONFUGURED "$instance"*****************************"
 EOF
 
 fi
@@ -66,16 +66,16 @@ VALIDATE(){
     fi
 }
 
-VALIDATE $? "Connected to $instance server"
+VALIDATE $? "Connected to "$instance" server"
 
 dnf install mysql-server -y
-VALIDATE $? "Installation of mysqlDB"
+VALIDATE $? "Installation of "$instance""
 
 systemctl enable mysqld
-VALIDATE $? "enable mysqld"
+VALIDATE $? "enable "$instance""
 
 systemctl start mysqld
-VALIDATE $? "start mysqld"
+VALIDATE $? "start "$instance""
 
 mysql_secure_installation --set-root-pass RoboShop@1
 VALIDATE $? "ROOT password setting"
@@ -98,47 +98,47 @@ VALIDATE(){
 }
 
 dnf module disable nodejs -y
-VALIDATE $? "module disable $instance "
+VALIDATE $? "module disable "$instance" "
 
 dnf module enable nodejs:20 -y
-VALIDATE $? "module enable $instance "
+VALIDATE $? "module enable "$instance" "
 
 dnf install nodejs -y
-VALIDATE $? "install nodejs $instance "
+VALIDATE $? "install nodejs "$instance" "
 
 useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
 VALIDATE $? "system user added for $instance "
 
 mkdir /app 
-VALIDATE $? "Created dire in $instance "
+VALIDATE $? "Created dire in "$instance" "
 
 curl -L -o /tmp/user.zip https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip
-VALIDATE $? "Downloaded code file for $instance "
+VALIDATE $? "Downloaded code file for "$instance" "
 
 cp /tmp/user.zip /app/user.zip
-VALIDATE $? "Copying of user.file for $instance "
+VALIDATE $? "Copying of user.file for "$instance" "
 
-unzip /app/tmp/user.zip
-VALIDATE $? "Unzipped code file for $instance "
+unzip /app/user.zip
+VALIDATE $? "Unzipped code file for "$instance" "
 
 /app/npm install
-VALIDATE $? "Installed dependinces $instance "
+VALIDATE $? "Installed dependinces "$instance" "
 
 cp $USER_SERVICE /etc/systemd/system/
-VALIDATE $? "copyed user.service file for $instance "
+VALIDATE $? "copyed user.service file for "$instance" "
 
 sed -i '/s/<REDIS-IP-ADDRESS>/redis.krishnakalyan.online/g' /etc/systemd/system/user.service
 sed -i '/s/<MONGODB-SERVER-IP-ADDRESS>/mongodb.krishnakalyan.online/g' /etc/systemd/system/user.service
-VALIDATE $? "updated user.service file with DNS records for $instance "
+VALIDATE $? "updated user.service file with DNS records for "$instance" "
 
 systemctl daemon-reload
-VALIDATE $? "daemon-reload $instance "
+VALIDATE $? "daemon-reload "$instance" "
 
 systemctl enable user
-VALIDATE $? "enable user for $instance "
+VALIDATE $? "enable user for "$instance" "
 
 systemctl start user
-VALIDATE $? "start server of  $instance "
+VALIDATE $? "start server of  "$instance" "
 
 VALIDATE $? "************ SUCCESSFULLY CONFUGURED "$instance"*****************************"
 
