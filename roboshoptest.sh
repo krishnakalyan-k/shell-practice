@@ -30,19 +30,19 @@ git clone https://github.com/krishnakalyan-k/shell-practice.git
 VALIDATE \$? "git clone"
 
 cp shell-practice/mongoDB_verinfo.txt /etc/yum.repos.d/mongo.repo
-VALIDATE \$? "copy mongodb repo"
+VALIDATE \$? "copy $instance repo"
 
 dnf install mongodb-org -y 
-VALIDATE \$? "mongodb installation"
+VALIDATE \$? "$instance installation"
 
 systemctl enable mongod 
-VALIDATE \$? "enable mongod"
+VALIDATE \$? "enable $instance"
 
 sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
 VALIDATE \$? "config update"
 
 systemctl start mongod
-VALIDATE \$? "mongod started"
+VALIDATE \$? "$instance started"
 EOF
 
 fi
