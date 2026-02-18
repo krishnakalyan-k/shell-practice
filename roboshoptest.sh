@@ -23,7 +23,7 @@ VALIDATE(){
 
 VALIDATE $? "Connected to MongoDB server"
 
-rm -rf /shell-practice.git
+rm -rf /shell-practice
 rm -rf /etc/yum.repos.d/mongo.repo
 rm -rf /etc/mongod.conf
 
