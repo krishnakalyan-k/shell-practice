@@ -1,7 +1,7 @@
 #!/bin/bash
 
-INSTANCE_INFO="/shell-practice/instances_53recordsinfo.txt"
-FILE="/shell-practice/instance_name.txt"
+INSTANCE_INFO="/root/shell-practice/instances_53recordsinfo.txt"
+FILE="/root/shell-practice/instance_name.txt"
 R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
