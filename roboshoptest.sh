@@ -14,10 +14,10 @@ mongodns_name=$(awk '$1=="mongodb" {print $4}' "$INSTANCE_INFO")
 ssh -T root@$mongopublic_ip << 'EOF'
 VALIDATE(){
     if [ $1 -ne 0 ]; then
-        echo -e " FAILURE " 
+        echo -e "$2 ... $R FAILURE $N" | tee -a $LOGS_FILE
         exit 1
     else
-        echo -e " SUCCESS " 
+        echo -e "$2 ... $G SUCCESS $N" | tee -a $LOGS_FILE
     fi
 }
 
