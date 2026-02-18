@@ -25,7 +25,7 @@ VALIDATE $? "Connected to MongoDB server"
 
 rm -rf /root/shell-practice
 rm -rf /etc/yum.repos.d/mongo.repo
-
+dnf remove mongodb-org -y
 
 git clone https://github.com/krishnakalyan-k/shell-practice.git
 VALIDATE $? "git clone"
