@@ -11,7 +11,7 @@ mongoprivate_ip=$(awk '$1=="mongodb" {print $2}' "$INSTANCE_INFO")
 mongopublic_ip=$(awk '$1=="mongodb" {print $3}' "$INSTANCE_INFO")
 mongodns_name=$(awk '$1=="mongodb" {print $4}' "$INSTANCE_INFO")
 
-ssh -T root@$mongopublic_ip << 'EOF'
+ssh -T root@$mongopublic_ip <<EOF
 VALIDATE(){
     if [ $1 -ne 0 ]; then
         echo -e "$2 ... $R FAILURE $N" | tee -a $LOGS_FILE
@@ -21,7 +21,7 @@ VALIDATE(){
     fi
 }
 
-VALIDATE $? "Connected to MongoDB server"
+VALIDATE $? "Connected to $instance server"
 
 rm -rf /root/shell-practice
 rm -rf /etc/yum.repos.d/mongo.repo
@@ -33,16 +33,16 @@ cp shell-practice/mongoDB_verinfo.txt /etc/yum.repos.d/mongo.repo
 VALIDATE $? "copying of mongodb verinfo file"
 
 dnf install mongodb-org -y 
-VALIDATE $? "installation of mongodb"
+VALIDATE $? "installation of $instance "
 
 systemctl enable mongod 
-VALIDATE $? "enable mongodb"
+VALIDATE $? "enable $instance "
 
 sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
-VALIDATE $? "Edited momgodb cfg file"
+VALIDATE $? "Edited $instance cfg file"
 
 systemctl start mongod
-VALIDATE $? "MongoDB services started"
+VALIDATE $? "$instance services started"
 EOF
 
 fi
