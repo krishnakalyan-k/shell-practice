@@ -17,73 +17,73 @@ do
 #  ${instance}_publicIP=$(awk -v inst="$instance" '$1==inst {print $3}' "$INSTANCE_INFO")
 #  ${instance}_dnsNAME=$(awk -v inst="$instance" '$1==inst {print $4}' "$INSTANCE_INFO")
 
-if [ "$instance" == "mongodb" ]; then 
-public_ip=$(awk -v inst="$instance" '$1==inst {print $3}' "$INSTANCE_INFO")
+# if [ "$instance" == "mongodb" ]; then 
+# public_ip=$(awk -v inst="$instance" '$1==inst {print $3}' "$INSTANCE_INFO")
 
-ssh -T root@$public_ip <<'EOF'
-VALIDATE(){
-    if [ $1 -ne 0 ]; then
-        echo -e "$2 ... $R FAILURE $N" | tee -a $LOGS_FILE
-        exit 1
-    else
-        echo -e "$2 ... $G SUCCESS $N" | tee -a $LOGS_FILE
-    fi
-}
+# ssh -T root@$public_ip <<'EOF'
+# VALIDATE(){
+#     if [ $1 -ne 0 ]; then
+#         echo -e "$2 ... $R FAILURE $N" | tee -a $LOGS_FILE
+#         exit 1
+#     else
+#         echo -e "$2 ... $G SUCCESS $N" | tee -a $LOGS_FILE
+#     fi
+# }
 
-VALIDATE $? "Connected to $instance server"
+# VALIDATE $? "Connected to $instance server"
 
-git clone https://github.com/krishnakalyan-k/shell-practice.git
-VALIDATE $? "git clone"
-cp shell-practice/mongoDB_verinfo.txt /etc/yum.repos.d/mongo.repo
-VALIDATE $? "copying of $instance verinfo file"
+# git clone https://github.com/krishnakalyan-k/shell-practice.git
+# VALIDATE $? "git clone"
+# cp shell-practice/mongoDB_verinfo.txt /etc/yum.repos.d/mongo.repo
+# VALIDATE $? "copying of $instance verinfo file"
 
-dnf install mongodb-org -y 
-VALIDATE $? "installation of $instance"
+# dnf install mongodb-org -y 
+# VALIDATE $? "installation of $instance"
 
-systemctl enable mongod 
-VALIDATE $? "enable $instance"
+# systemctl enable mongod 
+# VALIDATE $? "enable $instance"
 
-sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
-VALIDATE $? "Edited $instance cfg file"
+# sed -i 's/127.0.0.1/0.0.0.0/g' /etc/mongod.conf
+# VALIDATE $? "Edited $instance cfg file"
 
-systemctl start mongod
-VALIDATE $? "$instance services started"
+# systemctl start mongod
+# VALIDATE $? "$instance services started"
 
-VALIDATE $? "************ SUCCESSFULLY CONFUGURED $instance*****************************"
-EOF
+# VALIDATE $? "************ SUCCESSFULLY CONFUGURED $instance*****************************"
+# EOF
 
-fi
+# fi
 
-if [ "$instance" == "mysql" ]; then 
-public_ip=$(awk -v inst="$instance" '$1==inst {print $3}' "$INSTANCE_INFO")
-ssh -T root@$public_ip <<'EOF'
-VALIDATE(){
-    if [ $1 -ne 0 ]; then
-        echo -e "$2 ... $R FAILURE $N" | tee -a $LOGS_FILE
-        exit 1
-    else
-        echo -e "$2 ... $G SUCCESS $N" | tee -a $LOGS_FILE
-    fi
-}
+# if [ "$instance" == "mysql" ]; then 
+# public_ip=$(awk -v inst="$instance" '$1==inst {print $3}' "$INSTANCE_INFO")
+# ssh -T root@$public_ip <<'EOF'
+# VALIDATE(){
+#     if [ $1 -ne 0 ]; then
+#         echo -e "$2 ... $R FAILURE $N" | tee -a $LOGS_FILE
+#         exit 1
+#     else
+#         echo -e "$2 ... $G SUCCESS $N" | tee -a $LOGS_FILE
+#     fi
+# }
 
-VALIDATE $? "Connected to "$instance" server"
+# VALIDATE $? "Connected to "$instance" server"
 
-dnf install mysql-server -y
-VALIDATE $? "Installation of "$instance""
+# dnf install mysql-server -y
+# VALIDATE $? "Installation of "$instance""
 
-systemctl enable mysqld
-VALIDATE $? "enable "$instance""
+# systemctl enable mysqld
+# VALIDATE $? "enable "$instance""
 
-systemctl start mysqld
-VALIDATE $? "start "$instance""
+# systemctl start mysqld
+# VALIDATE $? "start "$instance""
 
-mysql_secure_installation --set-root-pass RoboShop@1
-VALIDATE $? "ROOT password setting"
+# mysql_secure_installation --set-root-pass RoboShop@1
+# VALIDATE $? "ROOT password setting"
 
-VALIDATE $? "************ SUCCESSFULLY CONFUGURED "$instance"*****************************"
-EOF
+# VALIDATE $? "************ SUCCESSFULLY CONFUGURED "$instance"*****************************"
+# EOF
 
-fi
+# fi
 
 if [ "$instance" == "user" ]; then 
 public_ip=$(awk -v inst="$instance" '$1==inst {print $3}' "$INSTANCE_INFO")
