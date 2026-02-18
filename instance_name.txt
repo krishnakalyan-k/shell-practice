@@ -1,10 +1,2 @@
 mysql    
-mongodb  
-redis    
-rabbitmq 
-catalogue
-user     
-cart     
-shipping 
-payment  
-frontend 
+mongodb
