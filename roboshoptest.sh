@@ -23,6 +23,11 @@ VALIDATE(){
 
 VALIDATE $? "Connected to MongoDB server"
 
+rm -rf /shell-practice.git
+rm -rf /etc/yum.repos.d/mongo.repo
+rm -rf /etc/mongod.conf
+
+
 git clone https://github.com/krishnakalyan-k/shell-practice.git
 VALIDATE $? "git clone"
 cp shell-practice/mongoDB_verinfo.txt /etc/yum.repos.d/mongo.repo
